@@ -1,6 +1,6 @@
 {
   "name": "jsynth-loopify",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "command line server + browserify",
   "main": "index.js",
   "scripts": {
