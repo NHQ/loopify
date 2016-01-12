@@ -31,7 +31,6 @@ loopify.prototype.add = function(loops, cb){
 
 loopify.prototype.play = function(name, params){
   var src = this.loops[name].src
-  console.log(src)
   src.loop = true
   src.connect(this.master.destination)
   src.start(this.master.currentTime)
@@ -40,10 +39,17 @@ loopify.prototype.play = function(name, params){
 
 loopify.prototype.fetch = function (loc, cb){
   var self = this
-  xhr.get(url.resolve(window.location.origin, loc), {responseType: 'arraybuffer'}, function(err, res){
-    sample(self.master, res.body, function(err, src){
-      cb(null, src)
+  if(typeof loc === 'string'){
+    xhr.get(url.resolve(window.location.origin, loc), {responseType: 'arraybuffer'}, function(err, res){
+      sample(self.master, res.body, function(err, src){
+        cb(null, src)
+      })
     })
-  })
+  }
+  else{ // it's a file buffer
+    sample(self.master, loc, function(err, src){
+      cb(err, src)
+    })
+  }
 }
 
